@@ -117,6 +117,14 @@ fun ToolsScreen(onBack: () -> Unit) {
 
             ToolsItem(
                 icon = Icons.Default.ArrowForward,
+                title = "Check for updates",
+                subtitle = "See if a newer version is available"
+            ) { checkForUpdates(context) }
+
+            Divider(modifier = Modifier.padding(vertical = 0.dp))
+
+            ToolsItem(
+                icon = Icons.Default.ArrowForward,
                 title = "More apps",
                 subtitle = "Explore other MKHG Lab apps"
             ) { showMoreApps(context) }
@@ -256,6 +264,27 @@ private fun openPlayStore(context: android.content.Context) {
         Intent.ACTION_VIEW,
         Uri.parse("market://details?id=$packageName")
     ).apply { setPackage("com.android.vending") }
+
+    try {
+        context.launchIntent(marketIntent)
+    } catch (e: ActivityNotFoundException) {
+        val webIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+        )
+        context.launchIntent(webIntent)
+    }
+}
+
+private fun checkForUpdates(context: android.content.Context) {
+    val packageName = context.packageName
+
+    val marketIntent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse("market://details?id=$packageName")
+    ).apply {
+        setPackage("com.android.vending")
+    }
 
     try {
         context.launchIntent(marketIntent)

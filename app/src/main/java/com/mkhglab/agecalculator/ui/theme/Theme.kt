@@ -1,20 +1,20 @@
 package com.mkhglab.agecalculator.ui.theme
 
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val AgeCalculatorColorScheme = darkColorScheme(
-    primary = HeaderBlue,
+private val AgeCalculatorColorScheme = lightColorScheme(
+    primary = BrandTeal,
     onPrimary = Color.White,
-    secondary = AccentYellow,
-    onSecondary = Color.Black,
-    background = ForestGreen,
-    onBackground = TextLight,
-    surface = ForestGreenDark,
-    onSurface = SubtleWhite,
-    error = ActionRed,
+    secondary = BrandTeal,
+    onSecondary = Color.White,
+    background = RevexOffWhite,      // matches Revex background
+    onBackground = RevexBlack,
+    surface = RevexOffWhite,
+    onSurface = RevexBlack,
+    error = BrandTeal,
     onError = Color.White
 )
 

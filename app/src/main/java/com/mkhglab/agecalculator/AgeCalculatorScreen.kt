@@ -45,21 +45,32 @@ import kotlinx.coroutines.isActive
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import com.mkhglab.agecalculator.ToolsScreen
+
+enum class AppScreen { Calculator, Tools }
 
 @Composable
 fun AgeCalculatorApp() {
+    var screen by remember { mutableStateOf(AppScreen.Calculator) }
+
     AgeCalculatorTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            AgeCalculatorScreen()
+            when (screen) {
+                AppScreen.Calculator -> AgeCalculatorScreen(onOpenTools = { screen = AppScreen.Tools })
+                AppScreen.Tools -> ToolsScreen(onBack = { screen = AppScreen.Calculator })
+            }
         }
     }
 }
 
 @Composable
-fun AgeCalculatorScreen(modifier: Modifier = Modifier) {
+fun AgeCalculatorScreen(
+    modifier: Modifier = Modifier,
+    onOpenTools: () -> Unit
+) {
     val now = remember { LocalDate.now() }
     var birthDate by remember { mutableStateOf(now.minusYears(20)) }
     var currentDate by remember { mutableStateOf(now) }
@@ -71,7 +82,7 @@ fun AgeCalculatorScreen(modifier: Modifier = Modifier) {
     val invalidRange = remember(birthDate, currentDate) { birthDate.isAfter(currentDate) }
 
     Scaffold(
-        topBar = { AgeCalculatorAppBar() },
+        topBar = { AgeCalculatorAppBar(onSettingsClick = onOpenTools) },
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
@@ -195,7 +206,7 @@ fun AgeCalculatorScreen(modifier: Modifier = Modifier) {
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun AgeCalculatorAppBar() {
+private fun AgeCalculatorAppBar(onSettingsClick: () -> Unit) {
     TopAppBar(
         title = {
             Text(
@@ -205,7 +216,7 @@ private fun AgeCalculatorAppBar() {
             )
         },
         actions = {
-            IconButton(onClick = { /* placeholder for settings */ }) {
+            IconButton(onClick = onSettingsClick) {
                 Icon(
                     imageVector = Icons.Filled.Settings,
                     contentDescription = "Settings",

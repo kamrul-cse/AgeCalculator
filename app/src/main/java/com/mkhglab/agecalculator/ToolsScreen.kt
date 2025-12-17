@@ -172,62 +172,7 @@ fun ToolsScreen(onBack: () -> Unit) {
             ) {
                 checkForUpdates(context)
             }
-
-            /*
-            ToolsItem(
-                icon = Icons.Default.Refresh,
-                title = localized("আপডেট চেক করুন", "Check for updates"),
-                subtitle = localized(
-                    "নতুন ভার্সন আছে কি না দেখুন",
-                    "See if there new version is available"
-                )
-            ) {
-                checkForUpdates(context)
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            ToolsItem(
-                icon = Icons.Default.Share,
-                title = "Share the app",
-                subtitle = "Let friends know about Age Calculator"
-            ) { shareApp(context) }
-
-            Divider(modifier = Modifier.padding(vertical = 0.dp))
-
-            ToolsItem(
-                icon = Icons.Default.Star,
-                title = "Rate & review",
-                subtitle = "Open Play Store to leave feedback"
-            ) { openPlayStore(context) }
-
-            Divider(modifier = Modifier.padding(vertical = 0.dp))
-
-            ToolsItem(
-                icon = Icons.Default.ArrowForward,
-                title = "Check for updates",
-                subtitle = "See if a newer version is available"
-            ) { checkForUpdates(context) }
-
-            Divider(modifier = Modifier.padding(vertical = 0.dp))
-
-            ToolsItem(
-                icon = Icons.Default.ArrowForward,
-                title = "More apps",
-                subtitle = "Explore other MKHG Lab apps"
-            ) { showMoreApps(context) }
-
-            Divider(modifier = Modifier.padding(vertical = 0.dp))
-
-            ToolsItem(
-                icon = Icons.Default.Email,
-                title = "Contact us",
-                subtitle = "Send feedback or suggestions"
-            ) { contactUs(context) }
-
-            Spacer(modifier = Modifier.padding(8.dp))
-            */
-
+            
             Text(
                 text = versionText,
                 style = MaterialTheme.typography.bodySmall,

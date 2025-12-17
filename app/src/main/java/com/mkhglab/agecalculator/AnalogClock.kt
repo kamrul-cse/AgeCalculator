@@ -2,6 +2,7 @@ package com.mkhglab.agecalculator
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
+import android.graphics.Paint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -11,14 +12,18 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
 import androidx.compose.material3.MaterialTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import java.time.LocalTime
 import kotlin.math.cos
 import kotlin.math.sin
+import androidx.compose.ui.graphics.toArgb
 
 @Composable
 fun AnalogClock(
@@ -28,7 +33,10 @@ fun AnalogClock(
     borderColor: Color = MaterialTheme.colorScheme.primary,
     tickColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
     handColor: Color = MaterialTheme.colorScheme.onSurface,
-    secondHandColor: Color = MaterialTheme.colorScheme.secondary
+    secondHandColor: Color = MaterialTheme.colorScheme.secondary,
+    numberColor: Color = MaterialTheme.colorScheme.onSurface,
+    numberSize: TextUnit = 18.sp,
+    showNumbers: Boolean = true
 ) {
     val time by rememberCurrentTime()
 
@@ -36,6 +44,11 @@ fun AnalogClock(
         val canvasSize = this.size
         val radius = canvasSize.minDimension / 2f
         val center = this.center
+        val numberPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = numberColor.toArgb()
+            textAlign = Paint.Align.CENTER
+            textSize = numberSize.toPx()
+        }
 
         drawCircle(color = clockColor, radius = radius)
         drawCircle(color = borderColor, radius = radius, style = Stroke(width = radius * 0.04f))
@@ -59,6 +72,17 @@ fun AnalogClock(
                 strokeWidth = if (major) 5f else 2f,
                 cap = StrokeCap.Round
             )
+        }
+
+        if (showNumbers) {
+            val numberRadius = radius * 0.78f
+            for (number in 1..12) {
+                val angleDeg = number * 30f - 90f
+                val angleRad = Math.toRadians(angleDeg.toDouble())
+                val x = center.x + cos(angleRad).toFloat() * numberRadius
+                val y = center.y + sin(angleRad).toFloat() * numberRadius + numberPaint.textSize / 3f
+                drawContext.canvas.nativeCanvas.drawText(number.toString(), x, y, numberPaint)
+            }
         }
 
         val hourAngle = ((time.hour % 12) + time.minute / 60f + time.second / 3600f) * 30f - 90f

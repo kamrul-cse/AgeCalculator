@@ -172,7 +172,7 @@ fun ToolsScreen(onBack: () -> Unit) {
             ) {
                 checkForUpdates(context)
             }
-            
+
             Text(
                 text = versionText,
                 style = MaterialTheme.typography.bodySmall,

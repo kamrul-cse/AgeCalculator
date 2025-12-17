@@ -2,6 +2,7 @@ package com.mkhglab.agecalculator
 
 import android.app.DatePickerDialog
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -26,10 +28,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -40,10 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mkhglab.agecalculator.ui.theme.AgeCalculatorTheme
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
 import java.time.LocalDate
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import com.mkhglab.agecalculator.ToolsScreen
 
@@ -77,7 +74,7 @@ fun AgeCalculatorScreen(
     var ageResult by remember { mutableStateOf<AgeResult?>(null) }
     var error by remember { mutableStateOf<String?>(null) }
 
-    val clockTime by rememberClockTime()
+    val clockSize = 240.dp
     val dateFormatter = remember { DateTimeFormatter.ofPattern("d MMM yyyy") }
     val invalidRange = remember(birthDate, currentDate) { birthDate.isAfter(currentDate) }
 
@@ -95,18 +92,13 @@ fun AgeCalculatorScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = "Welcome!",
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.secondary
-                )
-                Text(
-                    text = clockTime,
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Box(
+                modifier = Modifier
+                    .size(clockSize)
+            ) {
+                AnalogClock(clockSize = clockSize)
             }
 
             DateInputCard(
@@ -328,18 +320,7 @@ private fun ResultCard(result: AgeResult) {
 }
 
 @Composable
-private fun rememberClockTime(): State<String> {
-    val formatter = remember { DateTimeFormatter.ofPattern("hh:mm a") }
-    return produceState(initialValue = LocalTime.now().format(formatter)) {
-        while (isActive) {
-            value = LocalTime.now().format(formatter)
-            delay(1_000)
-        }
-    }
-}
-
 @Preview(showBackground = true)
-@Composable
 private fun AgeCalculatorScreenPreview() {
     AgeCalculatorApp()
 }

@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import com.mkhglab.agecalculator.ui.theme.AgeCalculatorTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import com.mkhglab.agecalculator.ToolsScreen
 
 enum class AppScreen { Calculator, Tools }
@@ -198,6 +199,25 @@ fun AgeCalculatorScreen(
 
             ageResult?.let { result ->
                 ResultCard(result = result)
+                val startDateTime = birthDate.atStartOfDay()
+                val endDateTime = currentDate.atStartOfDay()
+                val totalSeconds = ChronoUnit.SECONDS.between(startDateTime, endDateTime)
+                val totalMinutes = ChronoUnit.MINUTES.between(startDateTime, endDateTime)
+                val totalHours = ChronoUnit.HOURS.between(startDateTime, endDateTime)
+                val totalDays = ChronoUnit.DAYS.between(startDateTime, endDateTime)
+                val totalWeeks = ChronoUnit.WEEKS.between(startDateTime, endDateTime)
+                val totalMonths = ChronoUnit.MONTHS.between(startDateTime.toLocalDate(), endDateTime.toLocalDate())
+                //Spacer(modifier = Modifier.height(8.dp))
+                TotalsTable(
+                    totals = listOf(
+                        "Seconds" to totalSeconds,
+                        "Minutes" to totalMinutes,
+                        "Hours" to totalHours,
+                        "Days" to totalDays,
+                        "Weeks" to totalWeeks,
+                        "Months" to totalMonths
+                    )
+                )
             }
         }
     }
@@ -322,6 +342,47 @@ private fun ResultCard(result: AgeResult) {
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface
             )
+        }
+    }
+}
+
+@Composable
+private fun TotalsTable(totals: List<Pair<String, Long>>) {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.surface,
+        shape = RoundedCornerShape(14.dp),
+        tonalElevation = 4.dp
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = "Total Time",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.secondary,
+                fontWeight = FontWeight.SemiBold
+            )
+            totals.forEach { (label, value) ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = label,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Text(
+                        text = value.toString(),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+            }
         }
     }
 }

@@ -4,14 +4,46 @@
     <shared>
       <config />
     </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_facebook_like.xml">
+        <config>
+          <theme>@style/Theme.AgeCalculator</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_google_play.xml">
+        <config>
+          <theme>@style/Theme.AgeCalculator</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_mail.xml">
+        <config>
+          <theme>@style/Theme.AgeCalculator</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_share.xml">
+        <config>
+          <theme>@style/Theme.AgeCalculator</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_update.xml">
+        <config>
+          <theme>@style/Theme.AgeCalculator</theme>
+        </config>
+      </layout>
+    </layouts>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7cb8dcc8-0831-4096-81ea-e030b00efefd" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_facebook_like.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_google_play.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_mail.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_share.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_update.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/mkhglab/agecalculator/ToolsScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/mkhglab/agecalculator/ToolsScreen.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,12 +225,12 @@
       <map>
         <entry key="com.mkhglab.agecalculator">
           <value>
-            <CheckInfo lastCheckTimestamp="1765176503487" />
+            <CheckInfo lastCheckTimestamp="1765985118604" />
           </value>
         </entry>
         <entry key="com.mkhglab.agecalculator.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1765176503473" />
+            <CheckInfo lastCheckTimestamp="1765985118597" />
           </value>
         </entry>
       </map>

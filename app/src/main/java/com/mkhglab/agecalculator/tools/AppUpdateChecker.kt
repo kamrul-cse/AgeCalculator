@@ -22,6 +22,7 @@ class AppUpdateChecker(private val activity: Activity) {
     companion object {
         private const val TAG = "AppUpdateChecker"
         private const val UPDATE_REQUEST_CODE = 1001
+        private const val DAYS_FOR_FLEXIBLE_UPDATE = 7
     }
 
     private val appUpdateManager: AppUpdateManager by lazy {
@@ -132,6 +133,7 @@ class AppUpdateChecker(private val activity: Activity) {
 
     private fun startFlexibleUpdate(appUpdateInfo: AppUpdateInfo) {
         try {
+            // Register listener before starting update
             appUpdateManager.registerListener(installStateUpdatedListener)
 
             appUpdateManager.startUpdateFlowForResult(

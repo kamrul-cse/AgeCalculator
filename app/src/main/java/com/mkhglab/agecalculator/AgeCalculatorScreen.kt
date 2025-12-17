@@ -180,13 +180,6 @@ fun AgeCalculatorScreen(
                 )
             }
 
-            Text(
-                text = "Click CALCULATE to show your age",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-                textAlign = TextAlign.Center
-            )
-
             if (invalidRange) {
                 Text(
                     text = "Birth date must be on or before the current date.",
@@ -205,21 +198,6 @@ fun AgeCalculatorScreen(
 
             ageResult?.let { result ->
                 ResultCard(result = result)
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = "© MKHG Lab",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.secondary
-                )
-                Text(
-                    text = "Dhaka, Bangladesh",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.secondary
-                )
             }
         }
     }

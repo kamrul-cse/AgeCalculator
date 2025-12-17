@@ -63,7 +63,7 @@ fun AnalogClock(
 
         val hourAngle = ((time.hour % 12) + time.minute / 60f + time.second / 3600f) * 30f - 90f
         val minuteAngle = (time.minute + time.second / 60f) * 6f - 90f
-        val secondAngle = (time.second + time.nano / 1_000_000_000f) * 6f - 90f
+        val secondAngle = time.second * 6f - 90f
 
         fun handEnd(angle: Float, handLength: Float): Offset {
             val rad = Math.toRadians(angle.toDouble())
@@ -103,10 +103,12 @@ fun AnalogClock(
 
 @Composable
 private fun rememberCurrentTime(): State<LocalTime> {
-    return produceState(initialValue = LocalTime.now()) {
+    return produceState(initialValue = LocalTime.now().withNano(0)) {
         while (isActive) {
-            value = LocalTime.now()
-            delay(1_000)
+            val now = LocalTime.now().withNano(0)
+            value = now
+            val millisToNextSecond = 1_000 - (System.currentTimeMillis() % 1_000)
+            delay(millisToNextSecond)
         }
     }
 }

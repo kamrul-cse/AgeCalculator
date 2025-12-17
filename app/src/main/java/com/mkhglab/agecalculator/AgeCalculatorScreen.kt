@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -75,6 +76,8 @@ fun AgeCalculatorScreen(
     var error by remember { mutableStateOf<String?>(null) }
 
     val clockSize = 240.dp
+    val fullDateFormatter = remember { DateTimeFormatter.ofPattern("EEEE,\nd MMM yyyy") }
+    val todayFullDate = remember { LocalDate.now().format(fullDateFormatter) }
     val dateFormatter = remember { DateTimeFormatter.ofPattern("d MMM yyyy") }
     val invalidRange = remember(birthDate, currentDate) { birthDate.isAfter(currentDate) }
 
@@ -92,13 +95,39 @@ fun AgeCalculatorScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(0.dp))
 
-            Box(
-                modifier = Modifier
-                    .size(clockSize)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
             ) {
-                AnalogClock(clockSize = clockSize)
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(clockSize)
+                            .align(Alignment.Center)
+                    ) {
+                        AnalogClock(clockSize = clockSize)
+                    }
+                }
+
+                //Spacer(modifier = Modifier.width(8.dp))
+
+                Column(
+                    modifier = Modifier.weight(0.35f),
+                    horizontalAlignment = Alignment.End
+                ) {
+                    Text(
+                        text = todayFullDate,
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                }
             }
 
             DateInputCard(

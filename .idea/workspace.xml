@@ -37,7 +37,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7cb8dcc8-0831-4096-81ea-e030b00efefd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/mkhglab/agecalculator/AnalogClock.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/mkhglab/agecalculator/AnalogClock.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/mkhglab/agecalculator/AgeCalculatorScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/mkhglab/agecalculator/AgeCalculatorScreen.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,6 +98,7 @@
 }</component>
   <component name="ProjectId" id="36Y1fiJ9GTMKc1GnpRiOU9B36w3" />
   <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>

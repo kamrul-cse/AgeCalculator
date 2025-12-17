@@ -171,6 +171,10 @@ fun AgeCalculatorScreen(
                     contentColor = MaterialTheme.colorScheme.onError,
                     disabledContainerColor = MaterialTheme.colorScheme.error.copy(alpha = 0.5f)
                 ),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 6.dp,
+                    pressedElevation = 2.dp
+                ),
                 shape = RoundedCornerShape(26.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {

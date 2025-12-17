@@ -29,7 +29,7 @@ import androidx.compose.ui.graphics.toArgb
 fun AnalogClock(
     clockSize: Dp,
     modifier: Modifier = Modifier,
-    clockColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+    clockColor: Color = MaterialTheme.colorScheme.surface,
     borderColor: Color = MaterialTheme.colorScheme.primary,
     tickColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
     handColor: Color = MaterialTheme.colorScheme.onSurface,

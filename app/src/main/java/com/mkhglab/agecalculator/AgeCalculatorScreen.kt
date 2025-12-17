@@ -1,5 +1,6 @@
 package com.mkhglab.agecalculator
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,7 +46,6 @@ import com.mkhglab.agecalculator.ui.theme.AgeCalculatorTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-import com.mkhglab.agecalculator.ToolsScreen
 
 enum class AppScreen { Calculator, Tools }
 
@@ -70,14 +71,19 @@ fun AgeCalculatorScreen(
     modifier: Modifier = Modifier,
     onOpenTools: () -> Unit
 ) {
+    val context = LocalContext.current
+    val isPreview = LocalInspectionMode.current
+    val activity = context as? Activity
     val now = remember { LocalDate.now() }
     var birthDate by remember { mutableStateOf(now.minusYears(20)) }
     var currentDate by remember { mutableStateOf(now) }
     var ageResult by remember { mutableStateOf<AgeResult?>(null) }
     var error by remember { mutableStateOf<String?>(null) }
+    var interstitialReloadKey by remember { mutableStateOf(0) }
+    val interstitialAd = if (isPreview) null else rememberInterstitialAd(context, interstitialReloadKey)
 
     val clockSize = 240.dp
-    val fullDateFormatter = remember { DateTimeFormatter.ofPattern("EEEE,\nd MMM yyyy") }
+    val fullDateFormatter = remember { DateTimeFormatter.ofPattern("EEEE, d MMM yyyy") }
     val todayFullDate = remember { LocalDate.now().format(fullDateFormatter) }
     val dateFormatter = remember { DateTimeFormatter.ofPattern("d MMM yyyy") }
     val invalidRange = remember(birthDate, currentDate) { birthDate.isAfter(currentDate) }
@@ -85,7 +91,12 @@ fun AgeCalculatorScreen(
     Scaffold(
         topBar = { AgeCalculatorAppBar(onSettingsClick = onOpenTools) },
         modifier = modifier,
-        containerColor = MaterialTheme.colorScheme.background
+        containerColor = MaterialTheme.colorScheme.background,
+        bottomBar = {
+            if (!isPreview) {
+                BannerAdView(modifier = Modifier.fillMaxWidth())
+            }
+        }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -159,6 +170,9 @@ fun AgeCalculatorScreen(
                         .onSuccess {
                             ageResult = it
                             error = null
+                            showInterstitialIfReady(activity, interstitialAd) {
+                                interstitialReloadKey++
+                            }
                         }
                         .onFailure { throwable ->
                             error = throwable.message ?: "Please enter valid dates."

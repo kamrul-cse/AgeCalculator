@@ -5,12 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.mkhglab.agecalculator.ui.theme.AgeCalculatorTheme
 import com.mkhglab.agecalculator.tools.AppUpdateChecker
+import com.google.android.gms.ads.MobileAds
 
 class MainActivity : ComponentActivity() {
     private var appUpdateChecker: AppUpdateChecker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MobileAds.initialize(this)
         appUpdateChecker = AppUpdateChecker(this).also { it.checkForUpdate() }
         setContent {
             AgeCalculatorApp()

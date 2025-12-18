@@ -170,9 +170,11 @@ fun AgeCalculatorScreen(
                         .onSuccess {
                             ageResult = it
                             error = null
+                            /*
                             showInterstitialIfReady(activity, interstitialAd) {
                                 interstitialReloadKey++
                             }
+                            */
                         }
                         .onFailure { throwable ->
                             error = throwable.message ?: "Please enter valid dates."
